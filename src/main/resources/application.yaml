@@ -1,0 +1,16 @@
+server:
+  port: 8092
+  servlet:
+    context-path: /${spring.application.name}
+
+spring:
+  datasource:
+    url: ${DB_MULTIPOS_URL}
+    username: ${DB_MULTIPOS_USER}
+    password: ${DB_MULTIPOS_PSWD}
+    driver-class-name: org.postgresql.Driver
+  application:
+    name: ms-pos
+  jpa:
+    hibernate:
+      ddl-auto: none
