@@ -1,4 +1,4 @@
-package com.sisuz.pos.domain;
+package com.sisuz.pos.domain.terminal.entity;
 
 import com.sisuz.pos.common.persistence.AuditingEntity;
 import jakarta.persistence.*;
@@ -41,7 +41,7 @@ public class PosTerminal extends AuditingEntity {
     @NotNull
     @ColumnDefault("true")
     @Column(name = "is_active", nullable = false)
-    private boolean active;
+    private boolean active = true;
 
 
 }

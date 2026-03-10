@@ -1,4 +1,4 @@
-package com.sisuz.pos.domain;
+package com.sisuz.pos.domain.config;
 
 import com.sisuz.pos.common.persistence.AuditingEntity;
 import jakarta.persistence.*;
