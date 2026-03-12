@@ -1,4 +1,4 @@
-package com.sisuz.pos.domain.session;
+package com.sisuz.pos.domain.session.entity;
 
 import com.sisuz.pos.common.persistence.AuditingEntity;
 import com.sisuz.pos.domain.terminal.entity.PosTerminal;

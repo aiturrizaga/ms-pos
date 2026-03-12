@@ -2,7 +2,7 @@ package com.sisuz.pos.domain.sale;
 
 import com.sisuz.pos.common.persistence.AuditingEntity;
 import com.sisuz.pos.domain.terminal.entity.PosTerminal;
-import com.sisuz.pos.domain.session.PosSession;
+import com.sisuz.pos.domain.session.entity.PosSession;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
