@@ -1,7 +1,7 @@
 package com.sisuz.pos.domain.sale;
 
 import com.sisuz.pos.common.persistence.AuditingEntity;
-import com.sisuz.pos.domain.config.PosPaymentMethod;
+import com.sisuz.pos.domain.config.entity.PosPaymentMethod;
 import com.sisuz.pos.domain.session.entity.PosSession;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

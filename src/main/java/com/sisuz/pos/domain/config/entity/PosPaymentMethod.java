@@ -1,4 +1,4 @@
-package com.sisuz.pos.domain.config;
+package com.sisuz.pos.domain.config.entity;
 
 import com.sisuz.pos.common.persistence.AuditingEntity;
 import jakarta.persistence.*;
@@ -28,10 +28,9 @@ public class PosPaymentMethod extends AuditingEntity {
     @Column(name = "name", nullable = false, length = 60)
     private String name;
 
-    @Size(max = 30)
-    @NotNull
+    @Enumerated(EnumType.STRING)
     @Column(name = "method_type", nullable = false, length = 30)
-    private String methodType;
+    private PosPaymentMethodType methodType;
 
     @NotNull
     @ColumnDefault("false")
