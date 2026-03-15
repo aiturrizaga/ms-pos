@@ -1,5 +1,6 @@
 package com.sisuz.pos.domain.config.controller;
 
+import com.sisuz.pos.common.api.ApiResponse;
 import com.sisuz.pos.domain.config.controller.dto.PosConfigCreateRequest;
 import com.sisuz.pos.domain.config.controller.dto.PosConfigResponse;
 import com.sisuz.pos.domain.config.controller.dto.PosConfigUpdateRequest;
@@ -16,17 +17,17 @@ public class PosConfigController {
     private final PosConfigService configService;
 
     @PostMapping
-    public PosConfigResponse create(@RequestBody @Valid PosConfigCreateRequest request) {
-        return configService.create(request);
+    public ApiResponse<PosConfigResponse> create(@RequestBody @Valid PosConfigCreateRequest request) {
+        return ApiResponse.success(configService.create(request));
     }
 
     @PutMapping("/{id}")
-    public PosConfigResponse update(@PathVariable Long id, @RequestBody @Valid PosConfigUpdateRequest request) {
-        return configService.update(id, request);
+    public ApiResponse<PosConfigResponse> update(@PathVariable Long id, @RequestBody @Valid PosConfigUpdateRequest request) {
+        return ApiResponse.success(configService.update(id, request));
     }
 
     @GetMapping("/store/{storeId}")
-    public PosConfigResponse getByStoreId(@PathVariable Long storeId) {
-        return configService.getByStoreId(storeId);
+    public ApiResponse<PosConfigResponse> getByStoreId(@PathVariable Long storeId) {
+        return ApiResponse.success(configService.getByStoreId(storeId));
     }
 }

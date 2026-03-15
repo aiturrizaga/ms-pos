@@ -1,5 +1,6 @@
 package com.sisuz.pos.domain.config.controller;
 
+import com.sisuz.pos.common.api.ApiResponse;
 import com.sisuz.pos.domain.config.controller.dto.PosPaymentMethodCreateRequest;
 import com.sisuz.pos.domain.config.controller.dto.PosPaymentMethodFilter;
 import com.sisuz.pos.domain.config.controller.dto.PosPaymentMethodResponse;
@@ -20,40 +21,40 @@ public class PosPaymentMethodController {
     private final PosPaymentMethodService paymentMethodService;
 
     @PostMapping
-    public PosPaymentMethodResponse create(
+    public ApiResponse<PosPaymentMethodResponse> create(
             @RequestBody @Valid PosPaymentMethodCreateRequest request
     ) {
-        return paymentMethodService.create(request);
+        return ApiResponse.success(paymentMethodService.create(request));
     }
 
     @PutMapping("/{id}")
-    public PosPaymentMethodResponse update(
+    public ApiResponse<PosPaymentMethodResponse> update(
             @PathVariable Long id,
             @RequestBody @Valid PosPaymentMethodUpdateRequest request
     ) {
-        return paymentMethodService.update(id, request);
+        return ApiResponse.success(paymentMethodService.update(id, request));
     }
 
     @GetMapping("/{id}")
-    public PosPaymentMethodResponse getById(@PathVariable Long id) {
-        return paymentMethodService.getById(id);
+    public ApiResponse<PosPaymentMethodResponse> getById(@PathVariable Long id) {
+        return ApiResponse.success(paymentMethodService.getById(id));
     }
 
-    @PatchMapping("/{id}/activate")
+    @PutMapping("/{id}/activate")
     public void activate(@PathVariable Long id) {
         paymentMethodService.activate(id);
     }
 
-    @PatchMapping("/{id}/deactivate")
+    @DeleteMapping("/{id}/deactivate")
     public void deactivate(@PathVariable Long id) {
         paymentMethodService.deactivate(id);
     }
 
     @GetMapping
-    public Page<PosPaymentMethodResponse> getAll(
+    public ApiResponse<Page<PosPaymentMethodResponse>> getAll(
             PosPaymentMethodFilter filter,
             @PageableDefault(size = 20, sort = "name") Pageable pageable
     ) {
-        return paymentMethodService.getAll(filter, pageable);
+        return ApiResponse.success(paymentMethodService.getAll(filter, pageable));
     }
 }

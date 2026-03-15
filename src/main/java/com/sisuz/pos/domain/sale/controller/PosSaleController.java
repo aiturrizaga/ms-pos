@@ -1,5 +1,6 @@
 package com.sisuz.pos.domain.sale.controller;
 
+import com.sisuz.pos.common.api.ApiResponse;
 import com.sisuz.pos.domain.sale.controller.dto.PosSaleCreateRequest;
 import com.sisuz.pos.domain.sale.controller.dto.PosSaleDetailResponse;
 import com.sisuz.pos.domain.sale.controller.dto.PosSaleFilter;
@@ -20,25 +21,25 @@ public class PosSaleController {
     private final PosSaleService service;
 
     @PostMapping
-    public PosSaleDetailResponse createSale(@RequestBody @Valid PosSaleCreateRequest request) {
-        return service.createSale(request);
+    public ApiResponse<PosSaleDetailResponse> createSale(@RequestBody @Valid PosSaleCreateRequest request) {
+        return ApiResponse.success(service.createSale(request));
     }
 
     @GetMapping("/{id}")
-    public PosSaleResponse getById(@PathVariable Long id) {
-        return service.getSaleById(id);
+    public ApiResponse<PosSaleResponse> getById(@PathVariable Long id) {
+        return ApiResponse.success(service.getSaleById(id));
     }
 
     @GetMapping("/{id}/detail")
-    public PosSaleDetailResponse getDetailById(@PathVariable Long id) {
-        return service.getSaleDetailById(id);
+    public ApiResponse<PosSaleDetailResponse> getDetailById(@PathVariable Long id) {
+        return ApiResponse.success(service.getSaleDetailById(id));
     }
 
     @GetMapping
-    public Page<PosSaleResponse> getAll(
+    public ApiResponse<Page<PosSaleResponse>> getAll(
             PosSaleFilter filter,
             @PageableDefault(size = 20, sort = "paidAt") Pageable pageable
     ) {
-        return service.getAll(filter, pageable);
+        return ApiResponse.success(service.getAll(filter, pageable));
     }
 }

@@ -38,12 +38,12 @@ public class PosCashDrawerController {
         return ApiResponse.success(cashDrawerService.getById(id));
     }
 
-    @PatchMapping("/{id}/activate")
+    @PutMapping("/{id}/activate")
     public void activate(@PathVariable Long id) {
         cashDrawerService.activate(id);
     }
 
-    @PatchMapping("/{id}/deactivate")
+    @DeleteMapping("/{id}/deactivate")
     public void deactivate(@PathVariable Long id) {
         cashDrawerService.deactivate(id);
     }
