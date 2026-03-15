@@ -1,5 +1,6 @@
 package com.sisuz.pos.domain.session.controller;
 
+import com.sisuz.pos.common.api.ApiResponse;
 import com.sisuz.pos.domain.session.controller.dto.PosSessionCloseRequest;
 import com.sisuz.pos.domain.session.controller.dto.PosSessionFilter;
 import com.sisuz.pos.domain.session.controller.dto.PosSessionOpenRequest;
@@ -20,26 +21,26 @@ public class PosSessionController {
     private final PosSessionService sessionService;
 
     @PostMapping("/open")
-    public PosSessionResponse open(@RequestBody PosSessionOpenRequest request) {
-        return sessionService.open(request);
+    public ApiResponse<PosSessionResponse> open(@RequestBody PosSessionOpenRequest request) {
+        return ApiResponse.success(sessionService.open(request));
     }
 
     @PostMapping("/close")
-    public PosSessionResponse close(@RequestBody PosSessionCloseRequest request) {
-        return sessionService.close(request);
+    public ApiResponse<PosSessionResponse> close(@RequestBody PosSessionCloseRequest request) {
+        return ApiResponse.success(sessionService.close(request));
     }
 
     @GetMapping("/current/{terminalId}")
-    public PosSessionResponse current(@PathVariable Long terminalId) {
-        return sessionService.getCurrentSession(terminalId);
+    public ApiResponse<PosSessionResponse> current(@PathVariable Long terminalId) {
+        return ApiResponse.success(sessionService.getCurrentSession(terminalId));
     }
 
     @GetMapping
-    public Page<PosSessionResponse> getAll(
+    public ApiResponse<Page<PosSessionResponse>> getAll(
             PosSessionFilter filter,
             @PageableDefault(size = 20, sort = "openedAt", direction = Sort.Direction.DESC)
             Pageable pageable
     ) {
-        return sessionService.getAll(filter, pageable);
+        return ApiResponse.success(sessionService.getAll(filter, pageable));
     }
 }
