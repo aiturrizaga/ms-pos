@@ -1,4 +1,4 @@
-package com.sisuz.pos.domain.sale;
+package com.sisuz.pos.domain.sale.entity;
 
 import com.sisuz.pos.common.persistence.AuditingEntity;
 import com.sisuz.pos.domain.config.entity.PosPaymentMethod;
@@ -58,6 +58,5 @@ public class PosSalePayment extends AuditingEntity {
     @NotNull
     @Column(name = "received_by", nullable = false, length = 80)
     private String receivedBy;
-
 
 }

@@ -1,4 +1,4 @@
-package com.sisuz.pos.domain.sale;
+package com.sisuz.pos.domain.sale.entity;
 
 import com.sisuz.pos.common.persistence.AuditingEntity;
 import jakarta.persistence.*;
@@ -29,6 +29,10 @@ public class PosSaleLine extends AuditingEntity {
     private Long skuId;
 
     @NotNull
+    @Column(name = "sku_name", nullable = false)
+    private String skuName;
+
+    @NotNull
     @Column(name = "qty", nullable = false, precision = 14, scale = 4)
     private BigDecimal qty;
 
@@ -51,6 +55,5 @@ public class PosSaleLine extends AuditingEntity {
     @Size(max = 255)
     @Column(name = "note")
     private String note;
-
 
 }

@@ -1,4 +1,4 @@
-package com.sisuz.pos.domain.sale;
+package com.sisuz.pos.domain.sale.entity;
 
 import com.sisuz.pos.common.persistence.AuditingEntity;
 import com.sisuz.pos.domain.terminal.entity.PosTerminal;
@@ -78,8 +78,12 @@ public class PosSale extends AuditingEntity {
     @Column(name = "note")
     private String note;
 
+    @Size(max = 20)
+    @NotNull
+    @Column(name = "document_type", nullable = false, length = 20)
+    private String documentType;
+
     @Column(name = "document_id")
     private Long documentId;
-
 
 }
