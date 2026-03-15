@@ -81,5 +81,4 @@ public class PosCashMovement extends AuditingEntity {
     @Column(name = "voided_by", length = 80)
     private String voidedBy;
 
-
 }
