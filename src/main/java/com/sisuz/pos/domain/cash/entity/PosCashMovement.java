@@ -1,4 +1,4 @@
-package com.sisuz.pos.domain.cash;
+package com.sisuz.pos.domain.cash.entity;
 
 import com.sisuz.pos.common.persistence.AuditingEntity;
 import com.sisuz.pos.domain.config.entity.PosPaymentMethod;

@@ -1,4 +1,4 @@
-package com.sisuz.pos.domain.cash;
+package com.sisuz.pos.domain.cash.entity;
 
 import com.sisuz.pos.common.persistence.AuditingEntity;
 import com.sisuz.pos.domain.terminal.entity.PosTerminal;
@@ -37,7 +37,6 @@ public class PosCashDrawer extends AuditingEntity {
     @NotNull
     @ColumnDefault("true")
     @Column(name = "is_active", nullable = false)
-    private boolean active;
-
+    private boolean active = true;
 
 }

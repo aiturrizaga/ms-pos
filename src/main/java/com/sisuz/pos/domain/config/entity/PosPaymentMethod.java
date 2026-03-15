@@ -40,7 +40,7 @@ public class PosPaymentMethod extends AuditingEntity {
     @NotNull
     @ColumnDefault("true")
     @Column(name = "is_active", nullable = false)
-    private boolean active;
+    private boolean active = true;
 
 
 }

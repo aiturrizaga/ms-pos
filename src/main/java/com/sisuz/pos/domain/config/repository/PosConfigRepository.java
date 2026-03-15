@@ -9,4 +9,5 @@ public interface PosConfigRepository extends JpaRepository<PosConfig, Long> {
 
     Optional<PosConfig> findFirstByStoreId(Long storeId);
 
+    boolean existsByStoreId(Long storeId);
 }

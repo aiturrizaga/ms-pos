@@ -1,5 +1,6 @@
 package com.sisuz.pos.domain.config.service;
 
+import com.sisuz.pos.common.exception.BusinessException;
 import com.sisuz.pos.common.exception.NotFoundException;
 import com.sisuz.pos.domain.config.controller.dto.PosConfigCreateRequest;
 import com.sisuz.pos.domain.config.controller.dto.PosConfigResponse;
@@ -21,7 +22,10 @@ public class PosConfigServiceImpl implements PosConfigService {
     @Override
     public PosConfigResponse create(PosConfigCreateRequest request) {
         PosConfig entity = configMapper.toEntity(request);
-        entity.setActive(true);
+
+        if (request.storeId() != null && configRepository.existsByStoreId(request.storeId())) {
+            throw new BusinessException("A POS config already exists for storeId: " + request.storeId());
+        }
 
         return configMapper.toResponse(configRepository.save(entity));
     }
