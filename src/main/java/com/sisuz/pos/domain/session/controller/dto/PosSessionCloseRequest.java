@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 public record PosSessionCloseRequest(
 
         @NotNull
-        Long sessionId,
+        Long id,
 
         @NotNull
         @Size(max = 80)

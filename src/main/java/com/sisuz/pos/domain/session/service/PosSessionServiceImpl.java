@@ -60,7 +60,7 @@ public class PosSessionServiceImpl implements PosSessionService {
     @Override
     public PosSessionResponse close(PosSessionCloseRequest request) {
 
-        PosSession session = sessionRepository.findById(request.sessionId())
+        PosSession session = sessionRepository.findById(request.id())
                 .orElseThrow(() -> new NotFoundException("Session not found"));
 
         if (!PosSessionStatus.OPEN.name().equals(session.getStatus())) {

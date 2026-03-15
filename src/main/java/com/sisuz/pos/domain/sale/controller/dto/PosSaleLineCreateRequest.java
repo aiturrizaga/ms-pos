@@ -5,11 +5,12 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 public record PosSaleLineCreateRequest(
 
         @NotNull
-        Long skuId,
+        UUID skuId,
 
         @NotBlank
         String skuName,

@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -26,7 +27,7 @@ public class PosSaleLine extends AuditingEntity {
 
     @NotNull
     @Column(name = "sku_id", nullable = false)
-    private Long skuId;
+    private UUID skuId;
 
     @NotNull
     @Column(name = "sku_name", nullable = false)
