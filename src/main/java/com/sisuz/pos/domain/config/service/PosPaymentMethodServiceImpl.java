@@ -46,7 +46,7 @@ public class PosPaymentMethodServiceImpl implements PosPaymentMethodService {
     @Transactional(readOnly = true)
     public PosPaymentMethodResponse getById(Long id) {
         PosPaymentMethod entity = paymentMethodRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Payment method not found"));
+                .orElseThrow(() -> new NotFoundException("Payment method not found"));
 
         return paymentMethodMapper.toResponse(entity);
     }
@@ -54,7 +54,7 @@ public class PosPaymentMethodServiceImpl implements PosPaymentMethodService {
     @Override
     public void activate(Long id) {
         PosPaymentMethod entity = paymentMethodRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Payment method not found"));
+                .orElseThrow(() -> new NotFoundException("Payment method not found"));
 
         entity.setActive(true);
         paymentMethodRepository.save(entity);
@@ -63,7 +63,7 @@ public class PosPaymentMethodServiceImpl implements PosPaymentMethodService {
     @Override
     public void deactivate(Long id) {
         PosPaymentMethod entity = paymentMethodRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Payment method not found"));
+                .orElseThrow(() -> new NotFoundException("Payment method not found"));
 
         entity.setActive(false);
         paymentMethodRepository.save(entity);

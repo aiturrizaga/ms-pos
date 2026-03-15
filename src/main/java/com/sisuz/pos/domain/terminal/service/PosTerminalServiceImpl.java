@@ -1,5 +1,6 @@
 package com.sisuz.pos.domain.terminal.service;
 
+import com.sisuz.pos.common.exception.NotFoundException;
 import com.sisuz.pos.domain.terminal.controller.dto.PosTerminalCreateRequest;
 import com.sisuz.pos.domain.terminal.controller.dto.PosTerminalFilter;
 import com.sisuz.pos.domain.terminal.controller.dto.PosTerminalResponse;
@@ -41,7 +42,7 @@ public class PosTerminalServiceImpl extends ContextAwareService implements PosTe
     public PosTerminalResponse update(Long id, PosTerminalUpdateRequest request) {
 
         PosTerminal entity = terminalRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Terminal not found"));
+                .orElseThrow(() -> new NotFoundException("Terminal not found"));
 
         terminalMapper.update(request, entity);
 
@@ -52,7 +53,7 @@ public class PosTerminalServiceImpl extends ContextAwareService implements PosTe
     public void activate(Long id) {
 
         PosTerminal entity = terminalRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Terminal not found"));
+                .orElseThrow(() -> new NotFoundException("Terminal not found"));
 
         entity.setActive(true);
 
@@ -63,7 +64,7 @@ public class PosTerminalServiceImpl extends ContextAwareService implements PosTe
     public void deactivate(Long id) {
 
         PosTerminal entity = terminalRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Terminal not found"));
+                .orElseThrow(() -> new NotFoundException("Terminal not found"));
 
         entity.setActive(false);
 

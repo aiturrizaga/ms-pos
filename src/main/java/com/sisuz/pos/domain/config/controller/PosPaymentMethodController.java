@@ -13,7 +13,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/pos-payment-methods")
+@RequestMapping("/v1/payment-methods")
 @RequiredArgsConstructor
 public class PosPaymentMethodController {
 

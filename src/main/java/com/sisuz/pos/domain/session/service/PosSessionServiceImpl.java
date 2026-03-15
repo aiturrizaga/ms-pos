@@ -1,5 +1,7 @@
 package com.sisuz.pos.domain.session.service;
 
+import com.sisuz.pos.common.exception.BusinessException;
+import com.sisuz.pos.common.exception.NotFoundException;
 import com.sisuz.pos.domain.session.controller.dto.PosSessionCloseRequest;
 import com.sisuz.pos.domain.session.controller.dto.PosSessionFilter;
 import com.sisuz.pos.domain.session.controller.dto.PosSessionOpenRequest;
@@ -35,7 +37,7 @@ public class PosSessionServiceImpl implements PosSessionService {
                 request.terminalId(),
                 PosSessionStatus.OPEN.name()
         ).ifPresent(s -> {
-            throw new RuntimeException("Terminal already has an open session");
+            throw new BusinessException("Terminal already has an open session");
         });
 
         PosSession session = new PosSession();
@@ -59,10 +61,10 @@ public class PosSessionServiceImpl implements PosSessionService {
     public PosSessionResponse close(PosSessionCloseRequest request) {
 
         PosSession session = sessionRepository.findById(request.sessionId())
-                .orElseThrow(() -> new RuntimeException("Session not found"));
+                .orElseThrow(() -> new NotFoundException("Session not found"));
 
         if (!PosSessionStatus.OPEN.name().equals(session.getStatus())) {
-            throw new RuntimeException("Session already closed");
+            throw new BusinessException("Session already closed");
         }
 
         session.setClosedBy(request.closedBy());
@@ -88,7 +90,7 @@ public class PosSessionServiceImpl implements PosSessionService {
 
         PosSession session = sessionRepository
                 .findFirstByTerminalIdAndStatus(terminalId, PosSessionStatus.OPEN.name())
-                .orElseThrow(() -> new RuntimeException("No open session"));
+                .orElseThrow(() -> new BusinessException("No open session"));
 
         return mapper.toResponse(session);
     }

@@ -13,7 +13,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/pos-sessions")
+@RequestMapping("/v1/sessions")
 @RequiredArgsConstructor
 public class PosSessionController {
 
