@@ -1,5 +1,6 @@
 package com.sisuz.pos.domain.cash.controller;
 
+import com.sisuz.pos.common.api.ApiResponse;
 import com.sisuz.pos.domain.cash.controller.dto.PosCashMovementCreateRequest;
 import com.sisuz.pos.domain.cash.controller.dto.PosCashMovementFilter;
 import com.sisuz.pos.domain.cash.controller.dto.PosCashMovementResponse;
@@ -20,31 +21,27 @@ public class PosCashMovementController {
     private final PosCashMovementService service;
 
     @PostMapping
-    public PosCashMovementResponse create(@RequestBody @Valid PosCashMovementCreateRequest request) {
-        return service.create(request);
+    public ApiResponse<PosCashMovementResponse> create(@RequestBody @Valid PosCashMovementCreateRequest request) {
+        return ApiResponse.success(service.create(request));
     }
 
-    @PostMapping("/{id}/void")
-    public PosCashMovementResponse voidMovement(
-            @PathVariable Long id,
+    @PostMapping("/void")
+    public ApiResponse<PosCashMovementResponse> voidMovement(
             @RequestBody @Valid PosCashMovementVoidRequest request
     ) {
-        if (!id.equals(request.id())) {
-            throw new com.sisuz.pos.common.exception.BusinessException(4211, "Path variable id does not match request id");
-        }
-        return service.voidMovement(request);
+        return ApiResponse.success(service.voidMovement(request));
     }
 
     @GetMapping("/{id}")
-    public PosCashMovementResponse getById(@PathVariable Long id) {
-        return service.getById(id);
+    public ApiResponse<PosCashMovementResponse> getById(@PathVariable Long id) {
+        return ApiResponse.success(service.getById(id));
     }
 
     @GetMapping
-    public Page<PosCashMovementResponse> getAll(
+    public ApiResponse<Page<PosCashMovementResponse>> getAll(
             PosCashMovementFilter filter,
             @PageableDefault(size = 20, sort = "occurredAt") Pageable pageable
     ) {
-        return service.getAll(filter, pageable);
+        return ApiResponse.success(service.getAll(filter, pageable));
     }
 }
