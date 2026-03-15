@@ -26,7 +26,7 @@ public class PosTerminal extends AuditingEntity {
 
     @NotNull
     @Column(name = "store_id", nullable = false)
-    private Long storeId;
+    private UUID storeId;
 
     @Size(max = 30)
     @NotNull

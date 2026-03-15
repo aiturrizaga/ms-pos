@@ -1,5 +1,6 @@
 package com.sisuz.pos.domain.terminal.controller;
 
+import com.sisuz.pos.common.api.ApiResponse;
 import com.sisuz.pos.domain.terminal.controller.dto.PosTerminalCreateRequest;
 import com.sisuz.pos.domain.terminal.controller.dto.PosTerminalFilter;
 import com.sisuz.pos.domain.terminal.controller.dto.PosTerminalResponse;
@@ -20,30 +21,30 @@ public class PosTerminalController {
     private final PosTerminalService service;
 
     @PostMapping
-    public PosTerminalResponse create(@RequestBody @Valid PosTerminalCreateRequest request) {
-        return service.create(request);
+    public ApiResponse<PosTerminalResponse> create(@RequestBody @Valid PosTerminalCreateRequest request) {
+        return ApiResponse.success(service.create(request));
     }
 
     @PutMapping("/{id}")
-    public PosTerminalResponse update(@PathVariable Long id, @RequestBody @Valid PosTerminalUpdateRequest request) {
-        return service.update(id, request);
+    public ApiResponse<PosTerminalResponse> update(@PathVariable Long id, @RequestBody @Valid PosTerminalUpdateRequest request) {
+        return ApiResponse.success(service.update(id, request));
     }
 
-    @PatchMapping("/{id}/activate")
+    @PutMapping("/{id}/activate")
     public void activate(@PathVariable Long id) {
         service.activate(id);
     }
 
-    @PatchMapping("/{id}/deactivate")
+    @DeleteMapping("/{id}/deactivate")
     public void deactivate(@PathVariable Long id) {
         service.deactivate(id);
     }
 
     @GetMapping
-    public Page<PosTerminalResponse> getAll(
+    public ApiResponse<Page<PosTerminalResponse>> getAll(
             PosTerminalFilter filter,
             @PageableDefault(size = 20, sort = "name") Pageable pageable
     ) {
-        return service.getAll(filter, pageable);
+        return ApiResponse.success(service.getAll(filter, pageable));
     }
 }
