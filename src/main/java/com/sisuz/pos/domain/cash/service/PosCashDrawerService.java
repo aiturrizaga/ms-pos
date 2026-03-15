@@ -1,11 +1,10 @@
 package com.sisuz.pos.domain.cash.service;
 
-import com.sisuz.pos.domain.cash.controller.dto.PosCashDrawerCreateRequest;
-import com.sisuz.pos.domain.cash.controller.dto.PosCashDrawerFilter;
-import com.sisuz.pos.domain.cash.controller.dto.PosCashDrawerResponse;
-import com.sisuz.pos.domain.cash.controller.dto.PosCashDrawerUpdateRequest;
+import com.sisuz.pos.domain.cash.controller.dto.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import java.util.UUID;
 
 public interface PosCashDrawerService {
     PosCashDrawerResponse create(PosCashDrawerCreateRequest request);
@@ -19,4 +18,6 @@ public interface PosCashDrawerService {
     void deactivate(Long id);
 
     Page<PosCashDrawerResponse> getAllByTerminalId(PosCashDrawerFilter filter, Pageable pageable);
+
+    PosCashDrawerUserResponse getByUserAndCompany();
 }

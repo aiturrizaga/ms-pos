@@ -2,10 +2,7 @@ package com.sisuz.pos.domain.cash.service;
 
 import com.sisuz.pos.common.exception.BusinessException;
 import com.sisuz.pos.common.exception.NotFoundException;
-import com.sisuz.pos.domain.cash.controller.dto.PosCashDrawerCreateRequest;
-import com.sisuz.pos.domain.cash.controller.dto.PosCashDrawerFilter;
-import com.sisuz.pos.domain.cash.controller.dto.PosCashDrawerResponse;
-import com.sisuz.pos.domain.cash.controller.dto.PosCashDrawerUpdateRequest;
+import com.sisuz.pos.domain.cash.controller.dto.*;
 import com.sisuz.pos.domain.cash.entity.PosCashDrawer;
 import com.sisuz.pos.domain.cash.mapper.PosCashDrawerMapper;
 import com.sisuz.pos.domain.cash.repository.PosCashDrawerRepository;
@@ -13,6 +10,7 @@ import com.sisuz.pos.domain.cash.repository.spec.PosCashDrawerSpecFilter;
 import com.sisuz.pos.domain.cash.repository.spec.PosCashDrawerSpecs;
 import com.sisuz.pos.domain.terminal.entity.PosTerminal;
 import com.sisuz.pos.domain.terminal.repository.PosTerminalRepository;
+import com.sisuz.pos.security.context.ContextAwareService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class PosCashDrawerServiceImpl implements PosCashDrawerService {
+public class PosCashDrawerServiceImpl extends ContextAwareService implements PosCashDrawerService {
 
     private final PosCashDrawerRepository cashDrawerRepository;
     private final PosTerminalRepository terminalRepository;
@@ -96,4 +94,15 @@ public class PosCashDrawerServiceImpl implements PosCashDrawerService {
                 .map(cashDrawerMapper::toResponse);
     }
 
+    @Override
+    public PosCashDrawerUserResponse getByUserAndCompany() {
+        PosCashDrawer cashDrawer = cashDrawerRepository.findFirstByTerminalCompanyId(currentCompanyId())
+                .orElseThrow(() -> new BusinessException("Cash drawer not configured for this company or user"));
+        return new PosCashDrawerUserResponse(
+                cashDrawer.getTerminal().getId(),
+                cashDrawer.getTerminal().getName(),
+                cashDrawer.getId(),
+                cashDrawer.getName()
+        );
+    }
 }

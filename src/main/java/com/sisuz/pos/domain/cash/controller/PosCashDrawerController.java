@@ -1,10 +1,7 @@
 package com.sisuz.pos.domain.cash.controller;
 
 import com.sisuz.pos.common.api.ApiResponse;
-import com.sisuz.pos.domain.cash.controller.dto.PosCashDrawerCreateRequest;
-import com.sisuz.pos.domain.cash.controller.dto.PosCashDrawerFilter;
-import com.sisuz.pos.domain.cash.controller.dto.PosCashDrawerResponse;
-import com.sisuz.pos.domain.cash.controller.dto.PosCashDrawerUpdateRequest;
+import com.sisuz.pos.domain.cash.controller.dto.*;
 import com.sisuz.pos.domain.cash.service.PosCashDrawerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +33,11 @@ public class PosCashDrawerController {
     @GetMapping("/{id}")
     public ApiResponse<PosCashDrawerResponse> getById(@PathVariable Long id) {
         return ApiResponse.success(cashDrawerService.getById(id));
+    }
+
+    @GetMapping("/user/me")
+    public ApiResponse<PosCashDrawerUserResponse> getByUserAssociated() {
+        return ApiResponse.success(cashDrawerService.getByUserAndCompany());
     }
 
     @PutMapping("/{id}/activate")

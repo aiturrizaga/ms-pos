@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.Optional;
+import java.util.UUID;
 
 public interface PosCashDrawerRepository extends JpaRepository<PosCashDrawer, Long>, JpaSpecificationExecutor<PosCashDrawer> {
 
@@ -13,4 +14,6 @@ public interface PosCashDrawerRepository extends JpaRepository<PosCashDrawer, Lo
     boolean existsByCodeIgnoreCaseAndIdNot(String code, Long id);
 
     Optional<PosCashDrawer> findFirstByTerminalIdAndCodeIgnoreCase(Long terminalId, String code);
+
+    Optional<PosCashDrawer> findFirstByTerminalCompanyId(UUID companyId);
 }
