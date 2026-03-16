@@ -2,10 +2,8 @@ package com.sisuz.pos.domain.session.service;
 
 import com.sisuz.pos.common.exception.BusinessException;
 import com.sisuz.pos.common.exception.NotFoundException;
-import com.sisuz.pos.domain.session.controller.dto.PosSessionCloseRequest;
-import com.sisuz.pos.domain.session.controller.dto.PosSessionFilter;
-import com.sisuz.pos.domain.session.controller.dto.PosSessionOpenRequest;
-import com.sisuz.pos.domain.session.controller.dto.PosSessionResponse;
+import com.sisuz.pos.domain.sale.repository.PosSaleRepository;
+import com.sisuz.pos.domain.session.controller.dto.*;
 import com.sisuz.pos.domain.session.entity.PosSession;
 import com.sisuz.pos.domain.session.entity.PosSessionStatus;
 import com.sisuz.pos.domain.session.mapper.PosSessionMapper;
@@ -28,6 +26,7 @@ public class PosSessionServiceImpl implements PosSessionService {
 
     private final PosSessionRepository sessionRepository;
     private final PosTerminalRepository terminalRepository;
+    private final PosSaleRepository saleRepository;
     private final PosSessionMapper mapper;
 
     @Override
@@ -92,7 +91,8 @@ public class PosSessionServiceImpl implements PosSessionService {
                 .findFirstByTerminalIdAndStatus(terminalId, PosSessionStatus.OPEN.name())
                 .orElseThrow(() -> new BusinessException("No open session"));
 
-        return mapper.toResponse(session);
+        PosSaleStatsProjection stats = saleRepository.getSaleStatsBySessionId(session.getId());
+        return mapper.toResponse(session, PosSessionSaleStats.from(stats));
     }
 
     @Override
@@ -102,6 +102,9 @@ public class PosSessionServiceImpl implements PosSessionService {
                 PosSessionSpecs.withFilters(PosSessionSpecFilter.from(filter));
 
         return sessionRepository.findAll(spec, pageable)
-                .map(mapper::toResponse);
+                .map(session -> {
+                    PosSaleStatsProjection stats = saleRepository.getSaleStatsBySessionId(session.getId());
+                    return mapper.toResponse(session, PosSessionSaleStats.from(stats));
+                });
     }
 }

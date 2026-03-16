@@ -16,6 +16,8 @@ public record PosSessionResponse(
         String closingNote,
         BigDecimal expectedTotalAmount,
         BigDecimal countedTotalAmount,
-        BigDecimal diffTotalAmount
+        BigDecimal diffTotalAmount,
+        BigDecimal totalSale,
+        Long transactionQty
 ) {
 }
