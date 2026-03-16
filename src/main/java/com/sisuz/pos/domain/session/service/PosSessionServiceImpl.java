@@ -2,6 +2,12 @@ package com.sisuz.pos.domain.session.service;
 
 import com.sisuz.pos.common.exception.BusinessException;
 import com.sisuz.pos.common.exception.NotFoundException;
+import com.sisuz.pos.domain.cash.entity.PosCashMovement;
+import com.sisuz.pos.domain.cash.repository.PosCashMovementRepository;
+import com.sisuz.pos.domain.config.entity.PosPaymentMethod;
+import com.sisuz.pos.domain.config.repository.PosPaymentMethodRepository;
+import com.sisuz.pos.domain.sale.entity.PosSale;
+import com.sisuz.pos.domain.sale.entity.PosSalePayment;
 import com.sisuz.pos.domain.sale.repository.PosSaleRepository;
 import com.sisuz.pos.domain.session.controller.dto.*;
 import com.sisuz.pos.domain.session.entity.PosSession;
@@ -10,6 +16,7 @@ import com.sisuz.pos.domain.session.mapper.PosSessionMapper;
 import com.sisuz.pos.domain.session.repository.PosSessionRepository;
 import com.sisuz.pos.domain.session.repository.spec.PosSessionSpecFilter;
 import com.sisuz.pos.domain.session.repository.spec.PosSessionSpecs;
+import com.sisuz.pos.domain.terminal.entity.PosTerminal;
 import com.sisuz.pos.domain.terminal.repository.PosTerminalRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -27,6 +34,8 @@ public class PosSessionServiceImpl implements PosSessionService {
     private final PosSessionRepository sessionRepository;
     private final PosTerminalRepository terminalRepository;
     private final PosSaleRepository saleRepository;
+    private final PosPaymentMethodRepository paymentMethodRepository;
+    private final PosCashMovementRepository cashMovementRepository;
     private final PosSessionMapper mapper;
 
     @Override
@@ -52,6 +61,7 @@ public class PosSessionServiceImpl implements PosSessionService {
         session.setExpectedTotalAmount(request.expectedTotalAmount());
 
         sessionRepository.save(session);
+        cashMovementRepository.save(buildCashMovementFromSession(session));
 
         return mapper.toResponse(session);
     }
@@ -106,5 +116,23 @@ public class PosSessionServiceImpl implements PosSessionService {
                     PosSaleStatsProjection stats = saleRepository.getSaleStatsBySessionId(session.getId());
                     return mapper.toResponse(session, PosSessionSaleStats.from(stats));
                 });
+    }
+
+    private PosCashMovement buildCashMovementFromSession(PosSession session) {
+        PosPaymentMethod paymentMethod = paymentMethodRepository.findById(1L)
+                .orElseThrow(() -> new BusinessException("Cash payment method not found"));
+        PosCashMovement movement = new PosCashMovement();
+        movement.setSession(session);
+        movement.setTerminal(session.getTerminal());
+        movement.setDrawer(session.getDrawer());
+        movement.setMovementType("OPEN_CASH");
+        movement.setPaymentMethod(paymentMethod);
+        movement.setAmount(session.getExpectedTotalAmount());
+        movement.setCurrencyCode("PEN");
+        movement.setOccurredAt(session.getCreatedDate());
+        movement.setReasonCode("OPEN_CASH");
+        movement.setNote("Open cash");
+        movement.setIsVoided(false);
+        return movement;
     }
 }
